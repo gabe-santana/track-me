@@ -23,7 +23,7 @@ namespace trackapi.Repositories.Interfaces
 
         Task<TDocument> FindOneAsync(Expression<Func<TDocument, bool>> filterExpression);
 
-        TDocument FindById(ObjectId id);
+        Task<TDocument> FindById(ObjectId id);
 
         Task<TDocument> FindByIdAsync(string id);
 
@@ -45,7 +45,7 @@ namespace trackapi.Repositories.Interfaces
 
         Task DeleteOneAsync(Expression<Func<TDocument, bool>> filterExpression);
 
-        void DeleteById(string id);
+        Task DeleteById(string id);
 
         Task DeleteByIdAsync(string id);
 

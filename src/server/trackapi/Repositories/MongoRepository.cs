@@ -60,10 +60,11 @@ namespace trackapi.Repositories
             return Task.Run(() => _collection.Find(filterExpression).FirstOrDefaultAsync());
         }
 
-        public virtual TDocument FindById(ObjectId id)
+        public async virtual Task<TDocument> FindById(ObjectId id)
         {
             var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, id);
-            return _collection.Find(filter).SingleOrDefault();
+            var query = await _collection.FindAsync(filter);
+            return query.SingleOrDefault();
         }
 
         public virtual Task<TDocument> FindByIdAsync(string id)
@@ -127,11 +128,11 @@ namespace trackapi.Repositories
             return Task.Run(() => _collection.FindOneAndDeleteAsync(filterExpression));
         }
 
-        public void DeleteById(string id)
+        public async Task DeleteById(string id)
         {
             var objectId = new ObjectId(id);
             var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
-            _collection.FindOneAndDelete(filter);
+            await _collection.FindOneAndDeleteAsync(filter);
         }
 
         public Task DeleteByIdAsync(string id)
