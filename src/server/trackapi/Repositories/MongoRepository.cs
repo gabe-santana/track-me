@@ -76,6 +76,12 @@ namespace trackapi.Repositories
             });
         }
 
+        public virtual async Task<IEnumerable<TDocument>> Find()
+        {
+            var query = await _collection.FindAsync(new BsonDocument());
+            return query.ToList();
+        }
+
 
         public virtual void InsertOne(TDocument document)
         {
@@ -104,15 +110,16 @@ namespace trackapi.Repositories
             _collection.FindOneAndReplace(filter, document);
         }
 
-        public virtual async Task ReplaceOneAsync(TDocument document)
+        public virtual async Task<TDocument> ReplaceOneAsync(TDocument document)
         {
             var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, document.Id);
-            await _collection.FindOneAndReplaceAsync(filter, document);
+            var query = await _collection.FindOneAndReplaceAsync(filter, document);
+            return query;
         }
 
-        public void DeleteOne(Expression<Func<TDocument, bool>> filterExpression)
+        public async Task DeleteOne(Expression<Func<TDocument, bool>> filterExpression)
         {
-            _collection.FindOneAndDelete(filterExpression);
+            await _collection.FindOneAndDeleteAsync(filterExpression);
         }
 
         public Task DeleteOneAsync(Expression<Func<TDocument, bool>> filterExpression)

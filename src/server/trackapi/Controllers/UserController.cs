@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -19,6 +20,19 @@ namespace trackapi.Controllers
             => this.UserRepository = UserRepository;
 
 
+        [HttpGet]
+        public async Task<ActionResult> Get()
+        {
+            IEnumerable<UserDTO> user = await UserRepository.GetAll();
+            return Ok(user);
+        }
+
+        [HttpGet("GetByEmail")]
+        public async Task<ActionResult> GetByEmail([FromQuery] string email)
+        {
+            UserDTO user = await UserRepository.GetByEmail(email);
+            return Ok(user);
+        }
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] User user)
@@ -34,12 +48,29 @@ namespace trackapi.Controllers
                 return BadRequest("User email already exists");
             }
         }
-
-        [HttpGet]
-        public async Task<ActionResult> Get([FromQuery] string email)
+    
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] User user)
         {
-            UserDTO user = await UserRepository.GetByEmail(email);
-            return Ok(user);
+            if(!ModelState.IsValid)
+                return BadRequest();
+
+            try{
+                var updatedUser = await UserRepository.Update(user);      
+                return Ok(updatedUser);
+            }catch
+            {
+                return BadRequest("User not exists");
+            }
+        }
+   
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromQuery] string email)
+        {
+            var query =  await UserRepository.Delete(email);
+            if(query)
+                return Ok();
+            return BadRequest();
         }
     }
 }

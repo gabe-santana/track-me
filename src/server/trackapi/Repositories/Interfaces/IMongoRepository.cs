@@ -27,6 +27,8 @@ namespace trackapi.Repositories.Interfaces
 
         Task<TDocument> FindByIdAsync(string id);
 
+        Task<IEnumerable<TDocument>> Find();
+
         void InsertOne(TDocument document);
 
         Task InsertOneAsync(TDocument document);
@@ -37,9 +39,9 @@ namespace trackapi.Repositories.Interfaces
 
         void ReplaceOne(TDocument document);
 
-        Task ReplaceOneAsync(TDocument document);
+        Task<TDocument> ReplaceOneAsync(TDocument document);
 
-        void DeleteOne(Expression<Func<TDocument, bool>> filterExpression);
+        Task DeleteOne(Expression<Func<TDocument, bool>> filterExpression);
 
         Task DeleteOneAsync(Expression<Func<TDocument, bool>> filterExpression);
 
