@@ -4,9 +4,9 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace trackapi.Model
 {
-    public class User
+    public class User : Document
     {
-        [BsonId]
+        [BsonElement]
         public string Email { get; set; }
 
         [BsonElement]
@@ -15,12 +15,5 @@ namespace trackapi.Model
         [BsonElement]
         public string Password { get; set; }
 
-        [BsonElement]
-        [BsonRepresentation(BsonType.DateTime)]
-        public DateTime CreatedAt { get; set; } 
-
-        [BsonElement]
-        [BsonRepresentation(BsonType.DateTime)]
-        public DateTime UpdatedAt { get; set; } 
     }
 }
