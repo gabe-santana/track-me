@@ -8,5 +8,6 @@ namespace trackapi.Model
     public class Tracker : Document
     {
         public Location Location { get; set; }
+        public State State { get; set; }
     }
 }
