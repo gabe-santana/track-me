@@ -7,7 +7,6 @@ using trackapi.Config;
 
 namespace trackapi.Model
 {
-    
     [BsonCollection("User")]
     public class User : Document
     {
@@ -18,10 +17,6 @@ namespace trackapi.Model
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
-
-        [Required]
-        public string Password { get; set; }
-
         public IEnumerable<string> TrackersIds { get; set; } 
     }
 }
