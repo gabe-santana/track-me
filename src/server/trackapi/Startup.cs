@@ -14,6 +14,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using trackapi.Config;
 using trackapi.Config.Interfaces;
+using trackapi.Repositories;
+using trackapi.Repositories.Interfaces;
 
 namespace trackapi
 {
@@ -34,6 +36,7 @@ namespace trackapi
             services.AddSingleton<IMongoDbSettings>(serviceProvider =>
                 serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
            
+            services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
