@@ -14,23 +14,23 @@ namespace trackapi.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-         private readonly IUserRepository UserRepository;
+         private readonly IUserRepository userRepository;
 
-        public UserController(IUserRepository UserRepository)
-            => this.UserRepository = UserRepository;
+        public UserController(IUserRepository userRepository)
+            => this.userRepository = userRepository;
 
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult> Get()
         {
-            IEnumerable<UserDTO> user = await UserRepository.GetAll();
+            IEnumerable<UserDTO> user = await userRepository.GetAll();
             return Ok(user);
         }
 
-        [HttpGet("GetByEmail")]
+        [HttpGet]
         public async Task<ActionResult> GetByEmail([FromQuery] string email)
         {
-            UserDTO user = await UserRepository.GetByEmail(email);
+            UserDTO user = await userRepository.GetByEmail(email);
             return Ok(user);
         }
 
@@ -41,7 +41,7 @@ namespace trackapi.Controllers
                 return BadRequest();
 
             try{
-                var createdUser = await UserRepository.Create(user);      
+                var createdUser = await userRepository.Create(user);      
                 return Ok(createdUser);
             }catch
             {
@@ -56,7 +56,7 @@ namespace trackapi.Controllers
                 return BadRequest();
 
             try{
-                var updatedUser = await UserRepository.Update(user);      
+                var updatedUser = await userRepository.Update(user);      
                 return Ok(updatedUser);
             }catch
             {
@@ -67,7 +67,7 @@ namespace trackapi.Controllers
         [HttpDelete]
         public async Task<ActionResult> Delete([FromQuery] string email)
         {
-            var query =  await UserRepository.Delete(email);
+            var query =  await userRepository.Delete(email);
             if(query)
                 return Ok();
             return BadRequest();
