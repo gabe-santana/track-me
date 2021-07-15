@@ -1,18 +1,16 @@
 using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using trackapi.Config;
 
 namespace trackapi.Model
 {
+    
+    [BsonCollection("User")]
     public class User : Document
     {
-        [BsonElement]
         public string Email { get; set; }
-
-        [BsonElement]
         public string Name { get; set; }
-
-        [BsonElement]
         public string Password { get; set; }
 
     }
