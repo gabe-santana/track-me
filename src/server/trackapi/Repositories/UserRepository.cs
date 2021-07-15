@@ -29,9 +29,9 @@ namespace trackapi.Repositories
             };
         }
     
-        public UserDTO GetByEmail (string email)
+        public async Task<UserDTO> GetByEmail (string email)
         {
-            User user = MongoUserRepository.FindOne(
+            User user = await MongoUserRepository.FindOne(
                 filter => filter.Email == email
             );
 

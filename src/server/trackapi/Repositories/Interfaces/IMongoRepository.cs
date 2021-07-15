@@ -19,7 +19,7 @@ namespace trackapi.Repositories.Interfaces
             Expression<Func<TDocument, bool>> filterExpression,
             Expression<Func<TDocument, TProjected>> projectionExpression);
 
-        TDocument FindOne(Expression<Func<TDocument, bool>> filterExpression);
+        Task<TDocument> FindOne(Expression<Func<TDocument, bool>> filterExpression);
 
         Task<TDocument> FindOneAsync(Expression<Func<TDocument, bool>> filterExpression);
 

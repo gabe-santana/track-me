@@ -49,9 +49,10 @@ namespace trackapi.Repositories
             return _collection.Find(filterExpression).Project(projectionExpression).ToEnumerable();
         }
 
-        public virtual TDocument FindOne(Expression<Func<TDocument, bool>> filterExpression)
+        public async virtual Task<TDocument> FindOne(Expression<Func<TDocument, bool>> filterExpression)
         {
-            return _collection.Find(filterExpression).FirstOrDefault();
+           var query = await _collection.Find(filterExpression).ToListAsync();
+           return query.FirstOrDefault();
         }
 
         public virtual Task<TDocument> FindOneAsync(Expression<Func<TDocument, bool>> filterExpression)

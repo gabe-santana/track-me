@@ -36,9 +36,9 @@ namespace trackapi.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get([FromQuery] string email)
+        public async Task<ActionResult> Get([FromQuery] string email)
         {
-            UserDTO user = UserRepository.GetByEmail(email);
+            UserDTO user = await UserRepository.GetByEmail(email);
             return Ok(user);
         }
     }
