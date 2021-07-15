@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using trackapi.Model.Interfaces;
 
 namespace trackapi.Repositories.Interfaces
@@ -22,7 +23,7 @@ namespace trackapi.Repositories.Interfaces
 
         Task<TDocument> FindOneAsync(Expression<Func<TDocument, bool>> filterExpression);
 
-        TDocument FindById(string id);
+        TDocument FindById(ObjectId id);
 
         Task<TDocument> FindByIdAsync(string id);
 
@@ -49,5 +50,7 @@ namespace trackapi.Repositories.Interfaces
         void DeleteMany(Expression<Func<TDocument, bool>> filterExpression);
 
         Task DeleteManyAsync(Expression<Func<TDocument, bool>> filterExpression);
+
+        bool IsNullOrEmpty<TDocument>(IEnumerable<TDocument> list);
     }
 }

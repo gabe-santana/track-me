@@ -7,7 +7,7 @@ namespace trackapi.Model.Interfaces
     public interface IDocument
     {
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonRepresentation(BsonType.String)]
         ObjectId Id { get; set; }
 
         DateTime CreatedAt { get; }
