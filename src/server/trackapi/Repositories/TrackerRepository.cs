@@ -36,11 +36,13 @@ namespace trackapi.Repositories
             return trackerMapper.ToDTO(Tracker);
         }
 
-        public async Task<TrackerDTO> Update (Tracker Tracker)
+        public async Task<TrackerDTO> Update (TrackerDTO TrackerDTO)
         {
-            Tracker.UpdatedAt = DateTime.Now;
-            var updatedTracker = await MongoTrackerRepository.ReplaceOneAsync(Tracker);
-            return trackerMapper.ToDTO(Tracker);
+            var tracker = trackerMapper.ToEntity(TrackerDTO);
+            tracker.UpdatedAt = DateTime.Now;
+
+            var updatedTracker = await MongoTrackerRepository.ReplaceOneAsync(tracker);
+            return trackerMapper.ToDTO(tracker);
         }
    
         public async Task<bool> Delete (string id)
