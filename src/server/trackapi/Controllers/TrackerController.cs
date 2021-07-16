@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using trackapi.DTO;
 using trackapi.Model;
 using trackapi.Repositories;
+using trackapi.Repositories.Interfaces;
 
 namespace trackapi.Controllers
 {
@@ -12,8 +13,8 @@ namespace trackapi.Controllers
 
     public class TrackerController : ControllerBase
     {
-        private readonly TrackerRepository trackerRepository;
-        public TrackerController(TrackerRepository trackerRepository)
+        private readonly ITrackerRepository trackerRepository;
+        public TrackerController(ITrackerRepository trackerRepository)
             => this.trackerRepository = trackerRepository;
 
         [HttpGet("GetAll")]
@@ -46,7 +47,7 @@ namespace trackapi.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] Tracker tracker)
+        public async Task<ActionResult> Put([FromBody] TrackerDTO tracker)
         {
             if(!ModelState.IsValid)
                 return BadRequest();
