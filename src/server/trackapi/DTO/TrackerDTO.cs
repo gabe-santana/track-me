@@ -5,7 +5,7 @@ namespace trackapi.DTO
 {
     public class TrackerDTO
     {
-        public ObjectId Id { get; set; }
+        public string Id { get; set; }
         public Location Location { get; set; }
         public State State { get; set; }
     }
