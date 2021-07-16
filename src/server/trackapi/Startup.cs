@@ -38,6 +38,7 @@ namespace trackapi
            
             services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            services.AddScoped(typeof(ITrackerRepository), typeof(TrackerRepository));
 
 
             services.AddControllers();
@@ -60,7 +61,7 @@ namespace trackapi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseWebSockets();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
