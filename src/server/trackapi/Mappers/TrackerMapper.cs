@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MongoDB.Bson;
 using trackapi.DTO;
 using trackapi.Mappers.Interfaces;
 using trackapi.Model;
@@ -10,7 +11,7 @@ namespace trackapi.Mappers
         public TrackerDTO ToDTO(Tracker entity)
         {
             return new TrackerDTO{
-                Id = entity.Id,
+                Id = entity.Id.ToString(),
                 Location = entity.Location,
                 State = entity.State
             };
@@ -19,7 +20,7 @@ namespace trackapi.Mappers
         public Tracker ToEntity(TrackerDTO entityDTO)
         {
             return new Tracker{
-                Id = entityDTO.Id,
+                Id = new ObjectId(entityDTO.Id),
                 Location = entityDTO.Location,
                 State = entityDTO.State
             };
@@ -30,7 +31,7 @@ namespace trackapi.Mappers
             {
                 yield return new TrackerDTO()
                 {
-                    Id = entity.Id,
+                    Id = entity.Id.ToString(),
                     Location = entity.Location,
                     State = entity.State
                 };
@@ -44,7 +45,7 @@ namespace trackapi.Mappers
             {
                 yield return new Tracker()
                 {
-                    Id = entity.Id,
+                    Id = new ObjectId(entity.Id),
                     Location = entity.Location,
                     State = entity.State
                 };
