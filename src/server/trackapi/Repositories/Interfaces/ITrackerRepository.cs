@@ -10,7 +10,7 @@ namespace trackapi.Repositories.Interfaces
         Task<IEnumerable<TrackerDTO>> GetAll();
         Task<TrackerDTO> GetById (string id);
         Task<TrackerDTO> Create (Tracker Tracker);
-        Task<TrackerDTO> Update (Tracker Tracker);
+        Task<TrackerDTO> Update (TrackerDTO TrackerDTO);
         Task<bool> Delete (string id);
     }
 }
