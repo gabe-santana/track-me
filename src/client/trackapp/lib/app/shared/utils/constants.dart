@@ -1,0 +1,1 @@
+const String URL_BASE = "https://localhost:5001/api/";
