@@ -16,6 +16,8 @@ using trackapi.Config;
 using trackapi.Config.Interfaces;
 using trackapi.Repositories;
 using trackapi.Repositories.Interfaces;
+using trackapi.Services;
+using trackapi.Services.Interfaces;
 
 namespace trackapi
 {
@@ -39,6 +41,8 @@ namespace trackapi
             services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddScoped(typeof(ITrackerRepository), typeof(TrackerRepository));
+            services.AddScoped(typeof(ITrackerService), typeof(TrackerService));
+            services.AddScoped(typeof(IChangeStreamService<>), typeof(ChangeStreamService<>));
 
 
             services.AddControllers();
