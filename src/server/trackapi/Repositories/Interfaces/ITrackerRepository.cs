@@ -12,5 +12,6 @@ namespace trackapi.Repositories.Interfaces
         Task<TrackerDTO> Create (Tracker Tracker);
         Task<TrackerDTO> Update (TrackerDTO TrackerDTO);
         Task<bool> Delete (string id);
+ 
     }
 }
