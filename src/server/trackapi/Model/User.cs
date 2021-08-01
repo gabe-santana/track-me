@@ -14,6 +14,7 @@ namespace trackapi.Model
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
-        public IEnumerable<string> TrackersIds { get; set; } 
+        
+        public string TrackerId { get; set; } 
     }
 }

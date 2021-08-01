@@ -50,7 +50,7 @@ namespace trackapi.Services
                 var resultMsg = Encoding.UTF8.GetString(buffer);
                 UserDTO userDTO = JsonConvert.DeserializeObject<UserDTO>(resultMsg);
 
-                var userTracker = await trackerRepository.GetById(userDTO.TrackersIds.ToList().FirstOrDefault());
+                var userTracker = await trackerRepository.GetById(userDTO.TrackerId);
                 
                 var serverMsg = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(userTracker));
                 

@@ -6,6 +6,6 @@ namespace trackapi.DTO
     {
         public string Email { get; set; }
         public string Name { get; set; }
-        public IEnumerable<string> TrackersIds { get; set; } 
+        public string TrackerId { get; set; } 
     }
 }

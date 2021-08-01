@@ -12,7 +12,7 @@ namespace trackapi.Mappers
             return new UserDTO{
                 Name = entity.Name,
                 Email = entity.Email,
-                TrackersIds = entity.TrackersIds
+                TrackerId = entity.TrackerId
             };
         }
 
@@ -21,7 +21,7 @@ namespace trackapi.Mappers
             return new User{
                 Name = entityDTO.Name,
                 Email = entityDTO.Email,
-                TrackersIds = entityDTO.TrackersIds
+                TrackerId = entityDTO.TrackerId
             };
         }
         public IEnumerable<UserDTO> ToDTOList(IEnumerable<User> entities)
@@ -32,7 +32,7 @@ namespace trackapi.Mappers
                 {
                     Name = entity.Name,
                     Email = entity.Email,
-                    TrackersIds = entity.TrackersIds
+                    TrackerId = entity.TrackerId
                 };
             }
         }
@@ -46,7 +46,7 @@ namespace trackapi.Mappers
                 {
                     Name = entity.Name,
                     Email = entity.Email,
-                    TrackersIds = entity.TrackersIds
+                    TrackerId = entity.TrackerId
                 };
             }
         }
