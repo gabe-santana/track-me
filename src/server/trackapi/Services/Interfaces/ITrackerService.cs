@@ -6,5 +6,6 @@ namespace trackapi.Services.Interfaces
     public interface ITrackerService
     {
         Task UpdateTrackerStatus(WebSocket webSocket);
+        Task GetTrackerStatus(WebSocket webSocket);
     }
 }
