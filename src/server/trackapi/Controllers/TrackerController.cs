@@ -24,10 +24,10 @@ namespace trackapi.Controllers
             return Ok(tracker);
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetById([FromQuery] string email)
+        [HttpGet()]
+        public async Task<ActionResult> GetById([FromQuery] string id)
         {
-            TrackerDTO tracker = await trackerRepository.GetById(email);
+            TrackerDTO tracker = await trackerRepository.GetById(id);
             return Ok(tracker);
         }
 
