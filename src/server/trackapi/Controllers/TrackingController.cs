@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using trackapi.DTO;
+using trackapi.Mappers;
 using trackapi.Model;
 using trackapi.Repositories.Interfaces;
+using trackapi.Services.Interfaces;
 
 namespace trackapi.Controllers
 {
@@ -17,28 +19,39 @@ namespace trackapi.Controllers
     public class TrackingController : ControllerBase
     {
         private readonly ILogger<TrackingController> _logger;
-        private readonly ITrackerRepository trackerRepository;
+        private readonly ITrackerService trackerService;
         
-        public TrackingController(
-                ILogger<TrackingController> _logger,
-                ITrackerRepository trackerRepository
-            )
-            => this._logger = _logger;
+        public TrackingController(ITrackerService trackerService, ILogger<TrackingController> _logger, ITrackerRepository trackerRepository)
+        {
+            this.trackerService = trackerService;
+            this._logger = _logger;
+        }
+         
 
-        [HttpGet("/ws")]
-        public async Task Get()
+        [HttpGet("/ws/tracker/send")]
+        public async Task TrackerConnectionSend()
         {
           if (HttpContext.WebSockets.IsWebSocketRequest)
           {
               using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-              _logger.Log(LogLevel.Information, "WebSocket connection established");
-              await Echo(webSocket);
+              _logger.Log(LogLevel.Information, "New WebSocket connection established (Receiving from tracker)");
+              await trackerService.UpdateTrackerStatus(webSocket);
           }
           else
-          {
               HttpContext.Response.StatusCode = 400;
-          }
+        }
 
+        [HttpGet("/ws/tracker/receive")]
+        public async Task TrackerConnectionReceive()
+        {
+          if (HttpContext.WebSockets.IsWebSocketRequest)
+          {
+              using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
+              _logger.Log(LogLevel.Information, "New WebSocket connection established (Receiving from tracker)");
+              await trackerService.GetTrackerStatus(webSocket);
+          }
+          else
+              HttpContext.Response.StatusCode = 400;
         }
 
         private async Task Echo(WebSocket webSocket)
@@ -61,24 +74,5 @@ namespace trackapi.Controllers
             _logger.Log(LogLevel.Information, "WebSocket connection closed");
         }
 
-
-        private async Task UpdateTrackerStatus(WebSocket webSocket)
-        {
-            var buffer = new byte[1024 * 4];
-            var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-            while (!result.CloseStatus.HasValue)
-            {
-                var resultMsg = Encoding.UTF8.GetString(buffer);
-                TrackerDTO resultMsgJson = JsonConvert.DeserializeObject<TrackerDTO>(resultMsg);
-
-                var trackerDTO = new TrackerDTO{
-                    Id = resultMsgJson.Id,
-                    Location = resultMsgJson.Location,
-                    State = resultMsgJson.State
-                };
-                await trackerRepository.Update(trackerDTO);
-            }
-        }
     }   
 }
