@@ -54,15 +54,10 @@ namespace trackapi.Services
                 
                 var serverMsg = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(userTracker));
                 
-                result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                // result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
                
-                var watchTracker = changeStreamService.Watch();
-                if(watchTracker != null)
-                {
-                    serverMsg =  Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(watchTracker));
-                    await webSocket.SendAsync(new ArraySegment<byte>(serverMsg), WebSocketMessageType.Text, true, CancellationToken.None);
-                }
-
+                await changeStreamService.Watch(webSocket, result);
+            
             }
 
         }

@@ -6,6 +6,6 @@ namespace trackapi.Services.Interfaces
 {
     public interface IChangeStreamService<TDocWatch>
     {
-        TDocWatch Watch();
+       Task Watch(WebSocket websocket, WebSocketReceiveResult result);
     }
 }
