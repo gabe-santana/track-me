@@ -1,1 +1,1 @@
-const String URL_BASE = "https://localhost:5001/api/";
+const String URL_BASE = "https://trackmeapi.azurewebsites.net/api/";
